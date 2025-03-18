@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\OnionPortfolioBe.Application\OnionPortfolioBe.Application.csproj" />
     <ProjectReference Include="..\..\Infastructure\OnionPortfolioBe.Persistence\OnionPortfolioBe.Persistence.csproj" />
   </ItemGroup>
 
