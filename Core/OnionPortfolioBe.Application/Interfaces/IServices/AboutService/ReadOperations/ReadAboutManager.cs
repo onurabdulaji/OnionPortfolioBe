@@ -4,19 +4,19 @@ using OnionPortfolioBe.Domain.Entities;
 
 namespace OnionPortfolioBe.Application.Interfaces.IServices.AboutService;
 
-public class AboutService : IAboutService
+public class ReadAboutManager : IReadAboutService
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public AboutService(IUnitOfWork unitOfWork)
+    public ReadAboutManager(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IList<GetAllAboutQueryResponse>> GetAllAsync()
+    public async Task<IList<GetAllAboutQueryResponse>> GetAllAboutAsync()
     {
         var aboutsList = await _unitOfWork.AboutReadRepository.GetAllAsync();
-        return aboutsList.Select ( a=> new GetAllAboutQueryResponse
+        return aboutsList.Select(a => new GetAllAboutQueryResponse
         {
             Id = a.Id,
             Title = a.Title,
@@ -32,9 +32,9 @@ public class AboutService : IAboutService
         }).ToList();
     }
 
-    public Task<About> GetByIdAsync(Guid id)
+    public async Task<About> GetAboutByIdAsync(Guid id)
     {
-        var getAboutByIdResult = _unitOfWork.AboutReadRepository;
-        return getAboutByIdResult.GetByIdAsync(id);
+        var aboutId = await _unitOfWork.AboutReadRepository.GetByIdAsync(id);
+        return aboutId;
     }
 }

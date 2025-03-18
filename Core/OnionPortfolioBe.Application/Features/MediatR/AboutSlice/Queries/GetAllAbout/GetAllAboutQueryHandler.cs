@@ -5,16 +5,16 @@ namespace OnionPortfolioBe.Application.Features.MediatR.AboutSlice.Queries;
 
 public class GetAllAboutQueryHandler : IRequestHandler<GetAllAboutQueryRequest, IList<GetAllAboutQueryResponse>>
 {
-    private readonly IAboutService _aboutService;
+    private readonly IReadAboutService _readAboutService;
 
-    public GetAllAboutQueryHandler(IAboutService aboutService)
+    public GetAllAboutQueryHandler(IReadAboutService readAboutService)
     {
-        _aboutService = aboutService;
+        _readAboutService = readAboutService;
     }
 
     public async Task<IList<GetAllAboutQueryResponse>> Handle(GetAllAboutQueryRequest request, CancellationToken cancellationToken)
     {
-        var aboutsLists = await _aboutService.GetAllAsync();
+        var aboutsLists = await _readAboutService.GetAllAboutAsync();
         return aboutsLists;
     }
 }
