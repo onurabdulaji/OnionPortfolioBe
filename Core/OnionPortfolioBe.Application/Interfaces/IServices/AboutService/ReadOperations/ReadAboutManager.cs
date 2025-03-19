@@ -1,6 +1,10 @@
-﻿using OnionPortfolioBe.Application.Features.MediatR.AboutSlice.Queries;
+﻿using Mapster;
+using OnionPortfolioBe.Application.Features.MediatR.AboutSlice.Queries;
+using OnionPortfolioBe.Application.Features.MediatR.AboutSlice.Queries.GetAboutById;
 using OnionPortfolioBe.Application.Interfaces.IUnitOfWorks;
 using OnionPortfolioBe.Domain.Entities;
+using OnionPortfolioBe.Domain.Interfaces.IRepositories.IRepos.AboutIRepo;
+using System;
 
 namespace OnionPortfolioBe.Application.Interfaces.IServices.AboutService;
 
@@ -11,6 +15,17 @@ public class ReadAboutManager : IReadAboutService
     public ReadAboutManager(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
+    }
+
+    public async Task<GetAboutByIdResponse> GetAboutByIdAsync(Guid Id, CancellationToken cancellationToken)
+    {
+        var about = await _unitOfWork.AboutReadRepository.GetByIdAsync(Id);
+        if(about is null)
+        {
+            throw new Exception("About not found");
+        }
+
+        return about.Adapt<GetAboutByIdResponse>();
     }
 
     public async Task<IList<GetAllAboutQueryResponse>> GetAllAboutAsync(CancellationToken cancellationToken)
@@ -30,11 +45,5 @@ public class ReadAboutManager : IReadAboutService
             City = a.City,
             IsFreelanceAvailable = a.IsFreelanceAvailable
         }).ToList();
-    }
-
-    public async Task<About> GetAboutByIdAsync(Guid id)
-    {
-        var aboutId = await _unitOfWork.AboutReadRepository.GetByIdAsync(id);
-        return aboutId;
     }
 }
