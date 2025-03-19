@@ -1,11 +1,9 @@
-﻿using OnionPortfolioBe.Application.Mapping.Mapster;
-using OnionPortfolioBe.Domain.Entities;
+﻿using MediatR;
 
-namespace OnionPortfolioBe.Application.Features.MediatR.AboutSlice.Queries;
+namespace OnionPortfolioBe.Application.Features.MediatR.AboutSlice.Commands.CreateAbout;
 
-public class GetAllAboutQueryResponse : BaseDto<GetAllAboutQueryResponse, About>
+public class CreateAboutRequest : IRequest<CreateAboutResponse>
 {
-    public Guid Id { get; set; } 
     public string? Title { get; set; }
     public string? Description { get; set; }
     public DateTime? Birthday { get; set; }

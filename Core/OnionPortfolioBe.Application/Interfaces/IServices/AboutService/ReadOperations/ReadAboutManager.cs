@@ -13,7 +13,7 @@ public class ReadAboutManager : IReadAboutService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IList<GetAllAboutQueryResponse>> GetAllAboutAsync()
+    public async Task<IList<GetAllAboutQueryResponse>> GetAllAboutAsync(CancellationToken cancellationToken)
     {
         var aboutsList = await _unitOfWork.AboutReadRepository.GetAllAsync();
         return aboutsList.Select(a => new GetAllAboutQueryResponse

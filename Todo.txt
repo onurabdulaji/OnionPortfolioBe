@@ -1,0 +1,14 @@
+﻿
+
+
+public abstract class BaseResponse
+{
+    public string Message { get; set; } = string.Empty;
+}
+
+public class CreateAboutCommandResponse : BaseResponse
+{
+    public Guid Id { get; set; }
+}
+
+Bütün CRUD işlemleri için standart bir BaseResponse sınıfı tanımlanabilir:
