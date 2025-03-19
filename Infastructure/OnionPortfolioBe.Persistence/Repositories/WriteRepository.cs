@@ -18,11 +18,13 @@ public class WriteRepository<T> : IWriteRepository<T> where T : class, IEntity
     public async Task AddAsync(T entity)
     {
         await Table.AddAsync(entity);
+        await _context.SaveChangesAsync();
     }
 
     public async Task AddRangeAsync(IList<T> entities)
     {
         await Table.AddRangeAsync(entities);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<(bool isSuccess, T entity)> ChangeStatusAsync(T entity)
@@ -35,13 +37,15 @@ public class WriteRepository<T> : IWriteRepository<T> where T : class, IEntity
 
     public async Task<T> RemoveAsync(T entity)
     {
-        await Task.Run(() => Table.Remove(entity));
+        Table.Remove(entity);
+        await _context.SaveChangesAsync();
         return entity;
     }
 
     public async Task<T> UpdateAsync(T entity)
     {
-        await Task.Run(() => Table.Update(entity));
+        Table.Update(entity);
+        await _context.SaveChangesAsync();
         return entity;
     }
 }
